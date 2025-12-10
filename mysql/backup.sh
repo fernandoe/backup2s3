@@ -2,8 +2,8 @@
 
 set -e
 
-datetime_start=`python -c "import datetime; print(datetime.datetime.now())"`
-time_start=`python -c "import time; print(time.time())"`
+datetime_start=`python3 -c "import datetime; print(datetime.datetime.now())"`
+time_start=`python3 -c "import time; print(time.time())"`
 echo "Job started: ${datetime_start}"
 
 WORKDIR=/backups/mysql
@@ -42,8 +42,8 @@ curl -X PUT -T "${FILENAME_SQL}.tar.gz" \
   https://${BUCKET}.s3-us-west-2.amazonaws.com/mysql/${ENVIRONMENT}/${FILENAME_SQL}.tar.gz
 
 file_size_kb=`du -k "${FILENAME_SQL}.tar.gz" | cut -f1`
-datetime_end=`python -c "import datetime; print(datetime.datetime.now())"`
-time_time=`python -c "import time; start=${time_start}; elapsed=time.time() - start; print(\"%02d\" % elapsed)"`
+datetime_end=`python3 -c "import datetime; print(datetime.datetime.now())"`
+time_time=`python3 -c "import time; start=${time_start}; elapsed=time.time() - start; print(\"%02d\" % elapsed)"`
 echo "{\"version\": 1, \"information\": \"result\", \"size\": ${file_size_kb}, \"name\": \"${DB_DATABASE}\", \"start\": \"${datetime_start}\", \"end\": \"${datetime_end}\", \"time\": ${time_time}}"
 
 echo "Removendo arquivos locais de backups..."
