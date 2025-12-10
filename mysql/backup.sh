@@ -14,6 +14,7 @@ FILEPATH_SQL=$WORKDIR/$FILENAME_SQL
 BUCKET=${BUCKET:-development}
 AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-development}
 AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-development}
+S3_ENDPOINT=${S3_ENDPOINT}
 
 echo "Validando diretórios necessários..."
 mkdir -p "${WORKDIR}"
@@ -35,11 +36,11 @@ s3Secret=${AWS_SECRET_ACCESS_KEY}
 signature=`echo -en ${stringToSign} | openssl sha1 -hmac ${s3Secret} -binary | base64`
 
 curl -X PUT -T "${FILENAME_SQL}.tar.gz" \
-  -H "Host: ${BUCKET}.s3-us-west-2.amazonaws.com" \
+  -H "Host: ${S3_ENDPOINT}" \
   -H "Date: ${dateValue}" \
   -H "Content-Type: ${contentType}" \
   -H "Authorization: AWS ${s3Key}:${signature}" \
-  https://${BUCKET}.s3-us-west-2.amazonaws.com/mysql/${ENVIRONMENT}/${FILENAME_SQL}.tar.gz
+  https://${S3_ENDPOINT}/${BUCKET}/mysql/${ENVIRONMENT}/${FILENAME_SQL}.tar.gz
 
 file_size_kb=`du -k "${FILENAME_SQL}.tar.gz" | cut -f1`
 datetime_end=`python3 -c "import datetime; print(datetime.datetime.now())"`
