@@ -1,4 +1,4 @@
-FROM mysql:8.0.33-debian
+FROM mysql:8.0.46-debian
 
 RUN rm -f /etc/apt/sources.list.d/mysql.list && \
     apt-get update && \

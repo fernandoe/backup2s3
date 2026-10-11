@@ -15,12 +15,13 @@ BUCKET=${BUCKET:-development}
 AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID:-development}
 AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY:-development}
 S3_ENDPOINT=${S3_ENDPOINT}
+DB_PORT=${DB_PORT:-3306}
 
 echo "Validando diretórios necessários..."
 mkdir -p "${WORKDIR}"
 
 echo "Realizando o mysqldump..."
-mysqldump -h${DB_HOST} -u${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE} > ${FILEPATH_SQL}
+mysqldump -h${DB_HOST} -P${DB_PORT} -u${DB_USERNAME} -p${DB_PASSWORD} ${DB_DATABASE} > ${FILEPATH_SQL}
 
 echo "Compactando o backup do banco.."
 cd ${WORKDIR}
